@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Data files (ignored only in public folder)
+public/**/*.csv
+public/**/*.json

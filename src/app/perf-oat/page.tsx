@@ -1,8 +1,9 @@
 "use client";
 
+import Script from "next/script";
 import React, { useRef } from "react";
 
-const TOTAL_BUTTONS = 3000;
+const TOTAL_BUTTONS = 30000;
 
 // OAT button variants: primary (default), secondary, danger, outline, ghost
 const buttonGroups: Array<{
@@ -27,9 +28,19 @@ export default function PerfOatPage() {
   const [inputValue, setInputValue] = React.useState("OAT Button");
   const [debouncedValue, setDebouncedValue] = React.useState("OAT Button");
   const containerRef = useRef<HTMLDivElement>(null);
-  const metricsRef = useRef<{ render: number; paint: number; total: number } | null>(null);
-  const [metrics, setMetrics] = React.useState<{ render: number; paint: number; total: number } | null>(null);
-  const [status, setStatus] = React.useState<"idle" | "running" | "done">("idle");
+  const metricsRef = useRef<{
+    render: number;
+    paint: number;
+    total: number;
+  } | null>(null);
+  const [metrics, setMetrics] = React.useState<{
+    render: number;
+    paint: number;
+    total: number;
+  } | null>(null);
+  const [status, setStatus] = React.useState<"idle" | "running" | "done">(
+    "idle",
+  );
 
   const runBenchmark = React.useCallback((text: string) => {
     const container = containerRef.current;
@@ -48,7 +59,8 @@ export default function PerfOatPage() {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.textContent = `${label} ${i + 1}`;
-      if (group.dataVariant) btn.setAttribute("data-variant", group.dataVariant);
+      if (group.dataVariant)
+        btn.setAttribute("data-variant", group.dataVariant);
       if (group.className) btn.className = group.className;
       fragment.appendChild(btn);
     }
@@ -82,24 +94,26 @@ export default function PerfOatPage() {
     <>
       {/* OAT Core Styles */}
       <link rel="stylesheet" href="/oat/oat.min.css" />
-      <script src="/oat/oat.min.js" defer />
+      <Script strategy="afterInteractive" src="/oat/oat.min.js" defer />
 
       <main className="p-4 vstack" style={{ minHeight: "100vh" }}>
         <header>
           <h1>Track C: OAT — Pure CSS + Native Buttons</h1>
           <p className="text-light">
-            OAT is a zero-dependency, ~8KB CSS + JS library. Buttons are plain <code>&lt;button&gt;</code> elements styled directly with CSS — no Shadow DOM, no Virtual DOM, no framework.
+            OAT is a zero-dependency, ~8KB CSS + JS library. Buttons are plain{" "}
+            <code>&lt;button&gt;</code> elements styled directly with CSS — no
+            Shadow DOM, no Virtual DOM, no framework.
           </p>
         </header>
 
         <section className="hstack items-center gap-4 mb-6">
           <div className="vstack gap-1" style={{ flex: 1, maxWidth: "300px" }}>
             <label htmlFor="btn-label">Button Label</label>
-            <input 
+            <input
               id="btn-label"
-              type="text" 
-              value={inputValue} 
-              onChange={(e) => setInputValue(e.target.value)} 
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
               placeholder="Enter text..."
             />
           </div>
@@ -111,7 +125,9 @@ export default function PerfOatPage() {
         <div id="oat-metrics">
           {status === "done" && metrics && (
             <div role="alert" data-variant="success" className="vstack">
-              <h6 className="toast-title">OAT Native (n={TOTAL_BUTTONS}) in {metrics.total}ms</h6>
+              <h6 className="toast-title">
+                OAT Native (n={TOTAL_BUTTONS}) in {metrics.total}ms
+              </h6>
               <ul className="unstyled text-light">
                 <li>• {metrics.render}ms — DOM insertion (Native)</li>
                 <li>• 0ms — Hydration (Pure CSS)</li>
@@ -125,7 +141,8 @@ export default function PerfOatPage() {
 
         <section>
           <p className="text-lighter mb-2 small">
-            ↓ {TOTAL_BUTTONS} OAT-styled native <code>&lt;button&gt;</code> elements
+            ↓ {TOTAL_BUTTONS} OAT-styled native <code>&lt;button&gt;</code>{" "}
+            elements
           </p>
           <div
             ref={containerRef}

@@ -27,6 +27,10 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="stylesheet" href="/oat/oat.min.css" />
+        <script src="/oat/oat.min.js" defer></script>
+      </head>
       <body className="antialiased">{children}</body>
     </html>
   );
