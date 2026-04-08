@@ -22,7 +22,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div data-field>
       {label && <label htmlFor={selectId}>{label}</label>}
-      <select id={selectId} className={className} defaultValue="" {...props}>
+      <select id={selectId} className={className} {...props}>
         {placeholder && (
           <option value="" disabled>
             {placeholder}
